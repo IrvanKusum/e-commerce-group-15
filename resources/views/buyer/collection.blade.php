@@ -87,9 +87,8 @@
                             {{ $product->condition === 'new' ? 'NEW COND' : 'USED COND' }}
                         </span>
                         
-                        <div style="display:flex; gap:0.5rem;">
-                            <a href="{{ route('product.detail', $product->id) }}" class="btn btn-ghost" style="padding:0.4rem 0.8rem;">VIEW</a>
-                            <button onclick="addToCart({{ $product->id }})" class="btn btn-primary" style="padding:0.4rem 0.8rem;">BUY</button>
+                        <div style="display:flex; width: 100%;">
+                            <a href="{{ route('product.detail', $product->id) }}" class="btn btn-primary" style="flex: 1; text-align: center;">VIEW DETAILS</a>
                         </div>
                     </div>
                 </div>

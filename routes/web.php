@@ -26,14 +26,14 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::get('/transaction-history', [BuyerController::class, 'history'])->name('transaction.history');
     
-    // Cart Routes
-    Route::post('/cart/add', [BuyerController::class, 'addToCart'])->name('cart.add');
-    Route::get('/cart', [BuyerController::class, 'showCart'])->name('cart.show');
-    Route::delete('/cart/{id}', [BuyerController::class, 'removeFromCart'])->name('cart.remove');
-
     // Checkout Processing
     Route::post('/checkout/process', [BuyerController::class, 'processCheckout'])->name('checkout.process');
 });
+
+// Cart Routes (Public Access)
+Route::post('/cart/add', [BuyerController::class, 'addToCart'])->name('cart.add');
+Route::get('/cart', [BuyerController::class, 'showCart'])->name('cart.show');
+Route::delete('/cart/{id}', [BuyerController::class, 'removeFromCart'])->name('cart.remove');
 
 // Admin Routes
 Route::middleware(['auth', 'verified', 'role:admin'])->prefix('admin')->name('admin.')->group(function () {

@@ -43,7 +43,13 @@ class RegisteredUserController extends Controller
 
         event(new Registered($user));
 
+        $cart = $request->session()->get('cart');
+
         Auth::login($user);
+
+        if ($cart) {
+            $request->session()->put('cart', $cart);
+        }
 
         return redirect(route('dashboard', absolute: false));
     }

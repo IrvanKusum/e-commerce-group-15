@@ -64,28 +64,28 @@
                     @endif
                 </div>
                 
-                <div class="description" style="color:#ddd; line-height:1.6; margin-bottom:1.5rem;">
-                    <h3 style="color:white; margin-bottom:0.5rem;">Description</h3>
+                <div class="description">
+                    <h3>Description</h3>
                     <p>{{ $product->description }}</p>
                 </div>
                 
                 <p style="color:#aaa; margin-bottom:1.5rem;"><strong>Weight:</strong> {{ $product->weight }} gram</p>
                 
                 @if($product->stock > 0)
-                <div class="quantity-selector" style="display:flex; gap:10px; margin-bottom:1.5rem;">
-                    <button class="btn btn-secondary" onclick="updateQty(-1)" style="padding:0.5rem 1rem;">-</button>
-                    <input type="number" id="quantity" value="1" min="1" max="{{ $product->stock }}" readonly style="width:60px; text-align:center;">
-                    <button class="btn btn-secondary" onclick="updateQty(1)" style="padding:0.5rem 1rem;">+</button>
-                </div>
-                
-                <form action="{{ route('cart.add') }}" method="POST" style="display: flex; gap: 1rem; margin-top: 2rem;">
+                <form action="{{ route('cart.add') }}" method="POST" style="display: flex; gap: 1rem; align-items: stretch;">
                     @csrf
                     <input type="hidden" name="product_id" value="{{ $product->id }}">
-                    <input type="number" name="qty" value="1" min="1" style="width: 60px; padding: 0.8rem; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; color: white; text-align: center;">
-                    <button type="submit" class="btn btn-primary" style="flex: 1; font-size: 1.1rem;">ADD TO CART</button>
+                    
+                    <div class="quantity-wrapper">
+                        <button type="button" class="qty-btn" onclick="updateQty(-1)">-</button>
+                        <input type="number" name="qty" id="quantity" value="1" min="1" max="{{ $product->stock }}" class="qty-input" readonly>
+                        <button type="button" class="qty-btn" onclick="updateQty(1)">+</button>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary" style="flex: 1; font-size: 1.2rem; border-radius: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px;">Add to Cart</button>
                 </form>
                 @else
-                <div style="background:rgba(220,53,69,0.1); padding:1rem; border-radius:10px; text-align:center; color:var(--danger);">
+                <div style="background:rgba(220,53,69,0.1); padding:1rem; border-radius:12px; text-align:center; color:#ef4444; border: 1px solid rgba(239, 68, 68, 0.3);">
                     Product Currently Unavailable
                 </div>
                 @endif
