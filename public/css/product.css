@@ -56,10 +56,10 @@
 
 .thumbnail:hover,
 .thumbnail.active {
-    border-color: #00f2fe;
-    /* Cyan */
+    border-color: #f97316;
+    /* Magma Orange */
     transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0, 242, 254, 0.3);
+    box-shadow: 0 4px 12px rgba(249, 115, 22, 0.3);
 }
 
 .product-meta {
@@ -79,9 +79,9 @@
 }
 
 .badge-category {
-    background: rgba(0, 242, 254, 0.15);
-    color: #00f2fe;
-    border: 1px solid rgba(0, 242, 254, 0.3);
+    background: rgba(249, 115, 22, 0.15);
+    color: #f97316;
+    border: 1px solid rgba(249, 115, 22, 0.3);
 }
 
 .badge-condition {
@@ -104,7 +104,7 @@
 
 .price {
     font-size: 3.5rem;
-    background: linear-gradient(to right, #00f2fe, #4facfe);
+    background: linear-gradient(to right, #f97316, #ef4444);
     background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -179,7 +179,7 @@
 }
 
 .qty-btn:hover {
-    background: #00f2fe;
+    background: #f97316;
     color: black;
 }
 
@@ -225,7 +225,7 @@
 
 .reviewer-name {
     font-weight: 700;
-    color: #00f2fe;
+    color: #f97316;
 }
 
 @media (max-width: 768px) {
