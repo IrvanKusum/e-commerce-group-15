@@ -2,18 +2,23 @@
 
 /* Import core variables if needed, or redefine for admin specific overrides */
 :root {
-    --admin-bg: #0f172a;
-    --admin-card: #1e293b;
-    --admin-primary: #FF4500;
-    --admin-secondary: #FF8C00;
+    --admin-bg: #121212; /* Matching --dark */
+    --admin-card: #1c1c1e; /* Matching --darkl */
+    --admin-primary: #f97316; /* Magma Orange */
+    --admin-secondary: #ef4444; /* Fire Red */
     --admin-text: #ffffff;
     --admin-muted: #94a3b8;
-    --admin-border: rgba(255, 255, 255, 0.05);
+    --admin-border: rgba(255, 255, 255, 0.1);
 }
 
 body {
     background-color: var(--admin-bg);
     color: var(--admin-text);
+    font-family: 'Sora', sans-serif;
+    background-image:
+        radial-gradient(circle at 15% 50%, rgba(249, 115, 22, 0.03), transparent 30%),
+        radial-gradient(circle at 85% 30%, rgba(239, 68, 68, 0.03), transparent 30%);
+    background-attachment: fixed;
 }
 
 .content {
