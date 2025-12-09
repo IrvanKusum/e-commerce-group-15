@@ -14,6 +14,12 @@ Route::get('/product/{id?}', [BuyerController::class, 'product'])->name('product
 Route::get('/checkout', [BuyerController::class, 'checkout'])->name('checkout');
 Route::get('/page/{slug}', [App\Http\Controllers\PageController::class, 'page'])->name('page');
 
+// Store Registration Routes (for buyers who want to become sellers)
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::get('/store/register', [BuyerController::class, 'showStoreRegistration'])->name('store.register');
+    Route::post('/store/register', [BuyerController::class, 'submitStoreRegistration'])->name('store.register.submit');
+});
+
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard', function () {
         // Redirect based on role
@@ -44,19 +50,26 @@ Route::middleware(['auth', 'verified', 'role:admin'])->prefix('admin')->name('ad
     Route::get('/dashboard', [AdminController::class, 'index'])->name('dashboard');
     Route::get('/users', [AdminController::class, 'users'])->name('users');
     Route::get('/stores', [AdminController::class, 'stores'])->name('stores');
+    Route::post('/stores/verify', [AdminController::class, 'verifyStore'])->name('stores.verify');
 });
 
-// Seller Routes
-Route::middleware(['auth', 'verified', 'seller'])->prefix('seller')->name('seller.')->group(function () {
+// Seller Routes - Only requires auth and verified store
+Route::middleware(['auth', 'verified'])->prefix('seller')->name('seller.')->group(function () {
     Route::get('/dashboard', [SellerController::class, 'index'])->name('dashboard');
     Route::get('/products', [SellerController::class, 'products'])->name('products');
+    Route::post('/products', [SellerController::class, 'storeProduct'])->name('products.store');
+    Route::put('/products/{id}', [SellerController::class, 'updateProduct'])->name('products.update');
+    Route::delete('/products/{id}', [SellerController::class, 'destroyProduct'])->name('products.destroy');
     Route::get('/orders', [SellerController::class, 'orders'])->name('orders');
-    Route::patch('/orders/{id}', [SellerController::class, 'updateOrderStatus'])->name('orders.update');
+    Route::post('/orders/{id}/status', [SellerController::class, 'updateOrderStatus'])->name('orders.status');
     Route::get('/setup', [SellerController::class, 'setup'])->name('setup');
     Route::get('/withdrawal', [SellerController::class, 'withdrawal'])->name('withdrawal');
     Route::get('/balance', [SellerController::class, 'balance'])->name('balance');
     Route::get('/categories', [SellerController::class, 'categories'])->name('categories');
     Route::get('/product-image', [SellerController::class, 'productImage'])->name('product.image');
+    Route::get('/profile', function() {
+        return view('profile.edit');
+    })->name('profile');
 });
 
 Route::middleware('auth')->group(function () {

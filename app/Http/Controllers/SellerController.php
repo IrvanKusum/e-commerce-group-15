@@ -31,7 +31,8 @@ class SellerController extends Controller
     public function products()
     {
         $products = auth()->user()->store->products()->with('productImages')->latest()->get();
-        return view('seller.products', compact('products'));
+        $categories = \App\Models\ProductCategory::all();
+        return view('seller.products', compact('products', 'categories'));
     }
 
     public function orders()
@@ -88,5 +89,63 @@ class SellerController extends Controller
     public function productImage()
     {
         return view('seller.product-image');
+    }
+
+    // Product CRUD Methods
+    public function storeProduct(Request $request)
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'product_category_id' => 'required|exists:product_categories,id',
+            'price' => 'required|numeric|min:0',
+            'stock' => 'required|integer|min:0',
+            'condition' => 'required|in:new,used',
+            'description' => 'nullable|string',
+            'image_url' => 'nullable|url',
+        ]);
+
+        $product = auth()->user()->store->products()->create([
+            'name' => $request->name,
+            'product_category_id' => $request->product_category_id,
+            'price' => $request->price,
+            'stock' => $request->stock,
+            'condition' => $request->condition,
+            'description' => $request->description,
+        ]);
+
+        // Add product image if URL provided
+        if ($request->image_url) {
+            $product->productImages()->create([
+                'image' => $request->image_url,
+            ]);
+        }
+
+        return redirect()->route('seller.products')->with('success', 'Product added successfully!');
+    }
+
+    public function updateProduct(Request $request, $id)
+    {
+        $product = auth()->user()->store->products()->findOrFail($id);
+
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'product_category_id' => 'required|exists:product_categories,id',
+            'price' => 'required|numeric|min:0',
+            'stock' => 'required|integer|min:0',
+            'condition' => 'required|in:new,used',
+            'description' => 'nullable|string',
+        ]);
+
+        $product->update($request->only(['name', 'product_category_id', 'price', 'stock', 'condition', 'description']));
+
+        return redirect()->route('seller.products')->with('success', 'Product updated successfully!');
+    }
+
+    public function destroyProduct($id)
+    {
+        $product = auth()->user()->store->products()->findOrFail($id);
+        $product->delete();
+
+        return redirect()->route('seller.products')->with('success', 'Product deleted successfully!');
     }
 }

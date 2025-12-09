@@ -76,8 +76,9 @@
                             {{ $product->condition === 'new' ? 'BARU' : 'BEKAS' }}
                         </span>
                         
-                        <div style="display:flex; width: 100%;">
-                            <a href="{{ route('product.detail', $product->id) }}" class="btn btn-primary" style="flex: 1; text-align: center;">LIHAT DETAIL</a>
+                        <div style="display:flex; gap: 0.5rem; width: 100%;">
+                            <button onclick="addToCart({{ $product->id }})" class="btn btn-secondary" style="flex: 1; padding:0.4rem 0.6rem; font-size: 0.75rem;">+ KERANJANG</button>
+                            <a href="{{ route('product.detail', $product->id) }}" class="btn btn-primary" style="flex: 1; text-align: center; padding:0.4rem 0.6rem; font-size: 0.75rem;">LIHAT DETAIL</a>
                         </div>
                     </div>
                 </div>
@@ -120,7 +121,9 @@
         })
         .then(result => {
             if (result && result.status === 200) {
-                window.location.href = "{{ route('checkout') }}";
+                alert('✅ Produk ditambahkan ke keranjang!');
+                // Reload to update cart count in navbar
+                location.reload();
             } else if (result) {
                 alert(result.body.message || 'Error adding to cart');
             }

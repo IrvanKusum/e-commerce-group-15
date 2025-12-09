@@ -1,114 +1,124 @@
- body {
-        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-    }
-    
-    .content {
-        padding: 3rem 2rem;
-        max-width: 1200px;
-        margin: 0 auto;
-    }
-    
-    /* Back Button */
-    .btn-back {
-        display: inline-flex;
-        align-items: center;
-        gap: 0.5rem;
-        padding: 0.8rem 1.5rem;
-        background: white;
-        color: #00C49A;
-        border: 2px solid #00C49A;
-        border-radius: 10px;
-        text-decoration: none;
-        font-weight: 600;
-        transition: all 0.3s;
-        margin-bottom: 2rem;
-    }
-    
-    .btn-back:hover {
-        background: #00C49A;
-        color: white;
-        transform: translateX(-5px);
-    }
-    
-    .balance-card {
-        background: linear-gradient(135deg, #00C49A 0%, #00a882 100%);
-        color: white;
-        padding: 3rem;
-        border-radius: 20px;
-        text-align: center;
-        margin-bottom: 2rem;
-        box-shadow: 0 8px 30px rgba(0, 196, 154, 0.4);
-    }
-    
-    .balance-card h1 {
-        font-size: 2rem;
-        margin-bottom: 1rem;
-    }
-    
-    .balance-amount {
-        font-size: 3.5rem;
-        font-weight: 800;
-        margin: 1rem 0;
-    }
-    
-    .btn {
-        padding: 1rem 2rem;
-        border: none;
-        border-radius: 50px;
-        font-weight: 700;
-        cursor: pointer;
-        font-family: 'Sora', sans-serif;
-        transition: all 0.3s;
-        text-decoration: none;
-        display: inline-block;
-    }
-    
-    .btn-primary {
-        background: white;
-        color: #00C49A;
-    }
-    
-    .btn-primary:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 4px 15px rgba(255, 255, 255, 0.3);
-    }
-    
-    .card {
-        background: white;
-        border-radius: 20px;
-        padding: 2rem;
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-    }
-    
-    .card h2 {
-        color: #003459;
-        margin-bottom: 1.5rem;
-        font-size: 1.8rem;
-    }
-    
-    table {
-        width: 100%;
-        border-collapse: collapse;
-    }
-    
-    th, td {
-        padding: 1rem;
-        text-align: left;
-        border-bottom: 1px solid #E1E5EA;
-    }
-    
-    th {
-        background: #00C49A;
-        color: white;
-        font-weight: 700;
-    }
-    
-    tr:hover {
-        background: #f5f7fa;
-    }
-    
-    .empty-state {
-        text-align: center;
-        padding: 3rem;
-        color: #666;
-    }
+/* Seller Balance Page - Dark Theme */
+body {
+    background: var(--dark);
+}
+
+.content {
+    padding: 3rem 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Back Button - HIGHLIGHTED */
+.btn-back {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.8rem 1.5rem;
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    color: white;
+    border: none;
+    border-radius: 10px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s;
+    margin-bottom: 2rem;
+    box-shadow: 0 4px 15px rgba(255, 69, 0, 0.4);
+}
+
+.btn-back:hover {
+    transform: translateX(-5px);
+    box-shadow: 0 6px 20px rgba(255, 69, 0, 0.6);
+}
+
+.balance-card {
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    color: white;
+    padding: 3rem;
+    border-radius: 20px;
+    text-align: center;
+    margin-bottom: 2rem;
+    box-shadow: 0 8px 30px rgba(255, 69, 0, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.balance-card h1 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    font-family: 'Orbitron', sans-serif;
+}
+
+.balance-amount {
+    font-size: 3.5rem;
+    font-weight: 800;
+    margin: 1rem 0;
+}
+
+.btn {
+    padding: 1rem 2rem;
+    border: none;
+    border-radius: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    font-family: 'Sora', sans-serif;
+    transition: all 0.3s;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.btn-primary {
+    background: white;
+    color: var(--primary);
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(255, 255, 255, 0.3);
+}
+
+.card {
+    background: rgba(28, 28, 30, 0.6);
+    backdrop-filter: blur(20px);
+    border-radius: 20px;
+    padding: 2rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.card h2 {
+    color: white;
+    margin-bottom: 1.5rem;
+    font-size: 1.8rem;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th,
+td {
+    padding: 1rem;
+    text-align: left;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+th {
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    color: white;
+    font-weight: 700;
+}
+
+td {
+    color: white;
+}
+
+tr:hover {
+    background: rgba(255, 69, 0, 0.1);
+}
+
+.empty-state {
+    text-align: center;
+    padding: 3rem;
+    color: var(--text-muted);
+}

@@ -13,7 +13,7 @@
 <div style="background: var(--darkl); padding: 3rem; border-radius: 16px; text-align: center; border: 1px solid rgba(255,255,255,0.05); margin-bottom: 2rem;">
     <div style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 0.5rem;">Total Balance</div>
     <div style="font-size: 3rem; font-weight: bold; color: var(--primary); margin-bottom: 1.5rem;">Rp {{ number_format($balance ?? 0, 0, ',', '.') }}</div>
-    <button style="background: var(--primary); color: black; border: none; padding: 1rem 2rem; border-radius: 8px; font-weight: 600; cursor: pointer;">Withdraw Funds</button>
+    <a href="{{ route('seller.withdrawal') }}" style="background: var(--primary); color: black; border: none; padding: 1rem 2rem; border-radius: 8px; font-weight: 600; cursor: pointer; text-decoration: none;" class="btn btn-primary">Withdraw Funds</a>
 </div>
 
 <div style="background: var(--darkl); padding: 2rem; border-radius: 16px; border: 1px solid rgba(255,255,255,0.05);">
