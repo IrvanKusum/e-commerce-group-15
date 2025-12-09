@@ -75,43 +75,54 @@ class ChatbotService
     {
         $keywords = [];
         
-        // Product categories
+        // Product categories - Indonesian and English
         if (preg_match('/(shoe|sepatu|footwear)/i', $message)) {
             $keywords[] = 'footwear';
+            $keywords[] = 'sepatu';
         }
-        if (preg_match('/(jersey|shirt|jacket|apparel|baju|clothing)/i', $message)) {
+        if (preg_match('/(jersey|shirt|jacket|apparel|baju|clothing|pakaian|kaos)/i', $message)) {
             $keywords[] = 'apparel';
+            $keywords[] = 'pakaian';
         }
         if (preg_match('/(racket|raket)/i', $message)) {
             $keywords[] = 'racket';
+            $keywords[] = 'raket';
         }
-        if (preg_match('/(dumbbell|bench|resistance|band|weights)/i', $message)) {
+        if (preg_match('/(dumbbell|bench|resistance|band|weights|gym|fitness|alat\s*gym)/i', $message)) {
             $keywords[] = 'gym';
+            $keywords[] = 'fitness';
         }
         
-        // Specific features
-        if (preg_match('/(ankle|protect|support|high.?top)/i', $message)) {
+        // Specific features - Indonesian and English
+        if (preg_match('/(ankle|protect|support|high.?top|mata\s*kaki)/i', $message)) {
             $keywords[] = 'ankle-support';
             $keywords[] = 'high-top';
+            $keywords[] = 'basketball';
         }
-        if (preg_match('/(run|running|marathon|jog)/i', $message)) {
+        if (preg_match('/(run|running|marathon|jog|lari)/i', $message)) {
             $keywords[] = 'running';
+            $keywords[] = 'lari';
         }
         if (preg_match('/(basketball|basket)/i', $message)) {
             $keywords[] = 'basketball';
+            $keywords[] = 'basket';
         }
-        if (preg_match('/(soccer|football|futsal)/i', $message)) {
+        if (preg_match('/(soccer|football|futsal|sepak\s*bola)/i', $message)) {
             $keywords[] = 'soccer';
+            $keywords[] = 'football';
         }
         if (preg_match('/(tennis|tenis)/i', $message)) {
             $keywords[] = 'tennis';
+            $keywords[] = 'tenis';
         }
         if (preg_match('/(badminton|bulutangkis)/i', $message)) {
             $keywords[] = 'badminton';
+            $keywords[] = 'bulutangkis';
         }
-        if (preg_match('/(gym|fitness|strength|kuat)/i', $message)) {
+        if (preg_match('/(gym|fitness|strength|kuat|latihan)/i', $message)) {
             $keywords[] = 'gym';
             $keywords[] = 'strength';
+            $keywords[] = 'fitness';
         }
         
         return array_unique($keywords);
@@ -128,7 +139,11 @@ class ChatbotService
             $query->where(function($q) use ($keywords) {
                 foreach ($keywords as $keyword) {
                     $q->orWhere('name', 'LIKE', "%{$keyword}%")
-                      ->orWhere('description', 'LIKE', "%{$keyword}%");
+                      ->orWhere('description', 'LIKE', "%{$keyword}%")
+                      // Also search in category name
+                      ->orWhereHas('productCategory', function($catQuery) use ($keyword) {
+                          $catQuery->where('name', 'LIKE', "%{$keyword}%");
+                      });
                 }
             });
         }

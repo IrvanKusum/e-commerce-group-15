@@ -23,11 +23,11 @@
 @section('content')
     <div class="collection-header">
         <div class="container">
-            <h1>OUR COLLECTION</h1>
+            <h1>KOLEKSI KAMI</h1>
             <form action="{{ route('collection') }}" method="GET" class="search-box">
                 <input type="text" name="search" class="search-input" 
-                       placeholder="Search products..." value="{{ request('search') }}">
-                <button type="submit" class="search-btn">SEARCH</button>
+                       placeholder="Cari produk..." value="{{ request('search') }}">
+                <button type="submit" class="search-btn">CARI</button>
             </form>
         </div>
     </div>
@@ -37,7 +37,7 @@
         <div class="category-scroll">
             <div class="category-card {{ !request('category') ? 'active' : '' }}" onclick="window.location.href='{{ route('collection') }}'">
                 <div class="category-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16M4 12h16M4 18h16"/></svg></div>
-                <div class="category-name">All Items</div>
+                <div class="category-name">Semua Produk</div>
             </div>
             
             @foreach($categories as $category)
@@ -56,9 +56,9 @@
         <div class="section-header">
             <h2 class="section-title">
                 @if(request('search'))
-                    SEARCH RESULTS
+                    HASIL PENCARIAN
                 @else
-                    ALL PRODUCTS
+                    SEMUA PRODUK
                 @endif
             </h2>
         </div>
@@ -81,19 +81,19 @@
                     
                     <div class="product-footer">
                         <span class="badge {{ $product->condition === 'new' ? 'badge-new' : 'badge-used' }}">
-                            {{ $product->condition === 'new' ? 'NEW COND' : 'USED COND' }}
+                            {{ $product->condition === 'new' ? 'BARU' : 'BEKAS' }}
                         </span>
                         
                         <div style="display:flex; width: 100%;">
-                            <a href="{{ route('product.detail', $product->id) }}" class="btn btn-primary" style="flex: 1; text-align: center;">VIEW DETAILS</a>
+                            <a href="{{ route('product.detail', $product->id) }}" class="btn btn-primary" style="flex: 1; text-align: center;">LIHAT DETAIL</a>
                         </div>
                     </div>
                 </div>
             </div>
             @empty
             <div style="grid-column: 1/-1; text-align: center; padding: 4rem; color: var(--text-muted);">
-                <h3>No Equipment Found</h3>
-                <p>Try different keywords or check back later.</p>
+                <h3>Tidak Ada Produk Ditemukan</h3>
+                <p>Coba kata kunci lain atau kembali lagi nanti.</p>
             </div>
             @endforelse
         </div>

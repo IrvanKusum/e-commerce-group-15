@@ -5,13 +5,13 @@ class ChatbotWidget {
         this.messages = [];
         this.init();
     }
-    
+
     init() {
         this.createWidget();
         this.attachEventListeners();
         this.addWelcomeMessage();
     }
-    
+
     createWidget() {
         const widgetHTML = `
             <div class="chatbot-widget">
@@ -55,24 +55,24 @@ class ChatbotWidget {
                 </div>
             </div>
         `;
-        
+
         document.body.insertAdjacentHTML('beforeend', widgetHTML);
     }
-    
+
     attachEventListeners() {
         const toggle = document.getElementById('chatbotToggle');
         const close = document.getElementById('chatbotClose');
         const form = document.getElementById('chatbotForm');
-        
+
         toggle.addEventListener('click', () => this.toggleChat());
         close.addEventListener('click', () => this.toggleChat());
         form.addEventListener('submit', (e) => this.handleSubmit(e));
     }
-    
+
     toggleChat() {
         this.isOpen = !this.isOpen;
         const container = document.getElementById('chatbotContainer');
-        
+
         if (this.isOpen) {
             container.classList.remove('hidden');
             document.getElementById('chatbotInput').focus();
@@ -80,33 +80,33 @@ class ChatbotWidget {
             container.classList.add('hidden');
         }
     }
-    
+
     addWelcomeMessage() {
         const welcomeMsg = {
             type: 'bot',
             message: 'Halo! 👋 Saya AI Assistant FlexSport. Saya bisa membantu Anda menemukan produk yang tepat. Coba tanya seperti: "Saya ingin sepatu yang aman untuk melindungi ankle" atau "Rekomendasikan sepatu running"',
             timestamp: new Date()
         };
-        
+
         this.messages.push(welcomeMsg);
         this.renderMessage(welcomeMsg);
     }
-    
+
     async handleSubmit(e) {
         e.preventDefault();
-        
+
         const input = document.getElementById('chatbotInput');
         const message = input.value.trim();
-        
+
         if (!message) return;
-        
+
         // Add user message
         this.addMessage('user', message);
         input.value = '';
-        
+
         // Show typing indicator
         this.showTypingIndicator();
-        
+
         try {
             // Send to backend
             const response = await fetch('/chatbot/message', {
@@ -117,12 +117,12 @@ class ChatbotWidget {
                 },
                 body: JSON.stringify({ message })
             });
-            
+
             const data = await response.json();
-            
+
             // Remove typing indicator
             this.hideTypingIndicator();
-            
+
             if (data.success) {
                 this.addMessage('bot', data.data.message, data.data.products);
             } else {
@@ -134,7 +134,7 @@ class ChatbotWidget {
             this.addMessage('bot', 'Maaf, terjadi kesalahan koneksi. Silakan coba lagi.');
         }
     }
-    
+
     addMessage(type, message, products = null) {
         const msg = {
             type,
@@ -142,14 +142,14 @@ class ChatbotWidget {
             products,
             timestamp: new Date()
         };
-        
+
         this.messages.push(msg);
         this.renderMessage(msg);
     }
-    
+
     renderMessage(msg) {
         const messagesContainer = document.getElementById('chatbotMessages');
-        
+
         if (msg.type === 'user') {
             const userMsgHTML = `
                 <div class="chatbot-message user">
@@ -173,7 +173,7 @@ class ChatbotWidget {
                     <div class="message-content">
                         <div class="message-bubble">${this.escapeHtml(msg.message)}</div>
             `;
-            
+
             if (msg.products && msg.products.length > 0) {
                 botMsgHTML += '<div class="product-recommendations">';
                 msg.products.forEach(product => {
@@ -190,19 +190,19 @@ class ChatbotWidget {
                 });
                 botMsgHTML += '</div>';
             }
-            
+
             botMsgHTML += `
                     </div>
                 </div>
             `;
-            
+
             messagesContainer.insertAdjacentHTML('beforeend', botMsgHTML);
         }
-        
+
         // Scroll to bottom
         messagesContainer.scrollTop = messagesContainer.scrollHeight;
     }
-    
+
     showTypingIndicator() {
         const messagesContainer = document.getElementById('chatbotMessages');
         const typingHTML = `
@@ -224,18 +224,18 @@ class ChatbotWidget {
         messagesContainer.insertAdjacentHTML('beforeend', typingHTML);
         messagesContainer.scrollTop = messagesContainer.scrollHeight;
     }
-    
+
     hideTypingIndicator() {
         const typing = document.querySelector('.typing-message');
         if (typing) typing.remove();
     }
-    
+
     escapeHtml(text) {
         const div = document.createElement('div');
         div.textContent = text;
         return div.innerHTML;
     }
-    
+
     formatPrice(price) {
         return new Intl.NumberFormat('id-ID').format(price);
     }
