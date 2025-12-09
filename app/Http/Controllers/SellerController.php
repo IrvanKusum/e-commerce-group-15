@@ -101,22 +101,28 @@ class SellerController extends Controller
             'stock' => 'required|integer|min:0',
             'condition' => 'required|in:new,used',
             'description' => 'nullable|string',
-            'image_url' => 'nullable|url',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
         $product = auth()->user()->store->products()->create([
             'name' => $request->name,
+            'slug' => \Illuminate\Support\Str::slug($request->name),
             'product_category_id' => $request->product_category_id,
             'price' => $request->price,
             'stock' => $request->stock,
+            'weight' => $request->weight ?? 500, // Default 500g if not provided
             'condition' => $request->condition,
             'description' => $request->description,
         ]);
 
-        // Add product image if URL provided
-        if ($request->image_url) {
+        // Handle image upload
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $filename = time() . '_' . $image->getClientOriginalName();
+            $path = $image->storeAs('products', $filename, 'public');
+            
             $product->productImages()->create([
-                'image' => $request->image_url,
+                'image' => '/storage/' . $path,
             ]);
         }
 

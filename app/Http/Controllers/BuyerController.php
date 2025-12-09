@@ -15,14 +15,23 @@ class BuyerController extends Controller
         $query = Product::query();
 
         if ($request->has('search')) {
-            $query->where('name', 'like', '%' . $request->search . '%');
+            $searchTerm = $request->search;
+            
+            // Search by product name OR category name/slug
+            $query->where(function($q) use ($searchTerm) {
+                $q->where('name', 'like', '%' . $searchTerm . '%')
+                  ->orWhereHas('productCategory', function($categoryQuery) use ($searchTerm) {
+                      $categoryQuery->where('name', 'like', '%' . $searchTerm . '%')
+                                   ->orWhere('slug', 'like', '%' . $searchTerm . '%');
+                  });
+            });
         }
 
         if ($request->has('category')) {
             $query->where('product_category_id', $request->category);
         }
 
-        $products = $query->with('productImages')->get();
+        $products = $query->with('productImages')->latest()->get();
 
         // MOCK DATA GENERATOR IF EMPTY (For visual preview)
         if ($products->isEmpty() && !$request->has('search') && !$request->has('category')) {

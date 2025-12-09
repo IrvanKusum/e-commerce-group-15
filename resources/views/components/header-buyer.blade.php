@@ -18,10 +18,8 @@
                         @endif
                     </a>
                 </li>
-                @if(Auth::user()->isSeller())
-                    <li><a href="{{ route('seller.dashboard') }}">Pusat Penjual</a></li>
-                    <li><a href="{{ route('seller.products') }}">Produk</a></li>
-                    <li><a href="{{ route('seller.orders') }}">Pesanan</a></li>
+                @if(auth()->user()->store && auth()->user()->store->is_verified)
+                    <li><a href="{{ route('seller.dashboard') }}">Toko Saya</a></li>
                 @else
                     <li><a href="{{ route('store.register') }}" class="{{ request()->routeIs('store.register') ? 'active' : '' }}" style="font-weight: 600;">Buka Toko</a></li>
                 @endif

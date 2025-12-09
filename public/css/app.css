@@ -542,37 +542,45 @@ label {
 /* ========== CATEGORIES ========== */
 .category-scroll {
     display: flex;
-    gap: 1.5rem;
+    gap: 1rem;
     overflow-x: auto;
-    padding-bottom: 1.5rem;
-    scrollbar-width: none;
-    -ms-overflow-style: none;
-    /* Hide scrollbar IE/Edge */
+    padding-bottom: 1rem;
+    scroll-behavior: smooth;
 }
 
 .category-scroll::-webkit-scrollbar {
-    display: none;
-    /* Hide scrollbar Chrome/Safari/Opera */
+    height: 6px;
+}
+
+.category-scroll::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+}
+
+.category-scroll::-webkit-scrollbar-thumb {
+    background: var(--primary);
+    border-radius: 10px;
 }
 
 .category-card {
-    min-width: 160px;
-    height: 60px;
-    /* Reduced height for pill/rectangular look */
+    min-width: 130px;
+    /* Smaller */
+    height: 50px;
+    /* Reduced height */
     background: rgba(30, 41, 59, 0.6);
     border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 50px;
-    /* Pill shape */
     display: flex;
     flex-direction: row;
-    /* Horizontal layout */
     justify-content: center;
     align-items: center;
-    gap: 0.8rem;
+    gap: 0.6rem;
+    /* Reduced gap */
     cursor: pointer;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     backdrop-filter: blur(10px);
-    padding: 0 1.5rem;
+    padding: 0 1.2rem;
+    /* Reduced padding */
 }
 
 .category-card:hover,
@@ -584,16 +592,17 @@ label {
 }
 
 .category-icon {
-    font-size: 1.2rem;
+    font-size: 1rem;
+    /* Smaller icon */
     color: var(--primary);
     margin-bottom: 0;
-    /* Align with text */
     display: flex;
     align-items: center;
 }
 
 .category-name {
-    font-size: 0.95rem;
+    font-size: 0.85rem;
+    /* Smaller text */
     font-weight: 600;
     color: white;
     letter-spacing: 0.5px;
