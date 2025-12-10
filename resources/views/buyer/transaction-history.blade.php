@@ -128,10 +128,9 @@
             <div class="item-row">
                 @php 
                     $img = $detail->product->productImages->first()->image ?? ''; 
-                    $src = Str::startsWith($img, ['http', 'https']) ? $img : asset('storage/' . $img);
                 @endphp
                 @if($img)
-                <img src="{{ $src }}" class="item-img" alt="{{ $detail->product->name }}">
+                <img src="{{ $img }}" class="item-img" alt="{{ $detail->product->name }}">
                 @else
                 <div class="item-img" style="display:flex;align-items:center;justify-content:center;">⚡</div>
                 @endif

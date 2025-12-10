@@ -10,7 +10,9 @@ class Store extends Model
     protected $fillable = [
         'user_id',
         'name',
-        'logo',
+        'slug',
+        'image',
+        'description',
         'about',
         'phone',
         'address_id',

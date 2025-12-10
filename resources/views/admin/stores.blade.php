@@ -52,21 +52,21 @@
                         <td>
                             @if(!$store->is_verified)
                             <div class="action-buttons">
-                                <form method="POST" action="#" style="display:inline;">
+                                <form method="POST" action="{{ route('admin.stores.verify') }}" style="display:inline;">
                                     @csrf
                                     <input type="hidden" name="store_id" value="{{ $store->id }}">
                                     <input type="hidden" name="action" value="approve">
-                                    <button type="submit" name="verify_store" class="btn btn-approve" 
+                                    <button type="submit" class="btn btn-approve" 
                                             onclick="return confirm('Approve this store?')">
                                         Approve
                                     </button>
                                 </form>
-                                <form method="POST" action="#" style="display:inline;">
+                                <form method="POST" action="{{ route('admin.stores.verify') }}" style="display:inline;">
                                     @csrf
-                                    <input type="hidden" name="store_id" value="{{ $store['id'] }}">
+                                    <input type="hidden" name="store_id" value="{{ $store->id }}">
                                     <input type="hidden" name="action" value="reject">
-                                    <button type="submit" name="verify_store" class="btn btn-reject"
-                                            onclick="return confirm('Reject this store?')">
+                                    <button type="submit" class="btn btn-reject"
+                                            onclick="return confirm('Reject and delete this store?')">
                                         Reject
                                     </button>
                                 </form>

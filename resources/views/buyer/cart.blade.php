@@ -34,7 +34,7 @@
                 <div class="cart-item" style="background: var(--darkl); padding: 1.5rem; border-radius: 12px; display: flex; gap: 1.5rem; margin-bottom: 1rem; border: 1px solid rgba(255,255,255,0.05);">
                     <div style="width: 100px; height: 100px; background: #333; border-radius: 8px;">
                         @if($details['image'])
-                        <img src="{{ Str::startsWith($details['image'], ['http']) ? $details['image'] : asset('storage/'.$details['image']) }}" style="width:100%; height:100%; object-fit:cover; border-radius:8px;">
+                        <img src="{{ $details['image'] }}" style="width:100%; height:100%; object-fit:cover; border-radius:8px;">
                         @endif
                     </div>
                     <div style="flex: 1;">

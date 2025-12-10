@@ -18,11 +18,11 @@
 
     <div class="container">
         <!-- Categories -->
-        <div class="section-header">
+        <div class="section-header" style="margin-top: 5rem; margin-bottom: 2rem;">
             <h2 class="section-title">KATEGORI</h2>
         </div>
         
-        <div class="category-scroll">
+        <div class="category-scroll" id="categories" style="scroll-margin-top: 100px; margin-top: 2rem; margin-bottom: 4rem;">
             <div class="category-card {{ !request('category') ? 'active' : '' }}" onclick="window.location.href='{{ route('home') }}'">
                 <div class="category-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16M4 12h16M4 18h16"/></svg></div>
                 <div class="category-name">Semua Produk</div>
@@ -44,16 +44,12 @@
             @endforeach
         </div>
 
-        <!-- Products -->
-        <div class="section-header" id="products">
-            <h2 class="section-title">
-                @if(request('search'))
-                    HASIL PENCARIAN
-                @else
-                    PRODUK TERBARU
-                @endif
-            </h2>
-        </div>
+        <!-- Product Section -->
+        <section class="product-featured" id="featured-products" style="scroll-margin-top: 100px;">
+            <div class="section-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 3rem;">
+                <h2 class="section-title" style="margin: 0;">PRODUK TERBARU</h2>
+                <a href="{{ route('collection') }}" class="btn-view-all">Semua Produk</a>
+            </div>
 
         <div class="products-grid">
             @forelse($products as $product)
@@ -76,8 +72,9 @@
                             {{ $product->condition === 'new' ? 'BARU' : 'BEKAS' }}
                         </span>
                         
-                        <div style="display:flex; width: 100%;">
-                            <a href="{{ route('product.detail', $product->id) }}" class="btn btn-primary" style="flex: 1; text-align: center;">LIHAT DETAIL</a>
+                        <div style="display:flex; gap: 0.5rem; width: 100%;">
+                            <button onclick="addToCart({{ $product->id }})" class="btn btn-secondary" style="flex: 1; padding:0.4rem 0.6rem; font-size: 0.75rem;">+ KERANJANG</button>
+                            <a href="{{ route('product.detail', $product->id) }}" class="btn btn-primary" style="flex: 1; text-align: center; padding:0.4rem 0.6rem; font-size: 0.75rem;">LIHAT DETAIL</a>
                         </div>
                     </div>
                 </div>
@@ -120,7 +117,9 @@
         })
         .then(result => {
             if (result && result.status === 200) {
-                window.location.href = "{{ route('checkout') }}";
+                alert('✅ Produk ditambahkan ke keranjang!');
+                // Reload to update cart count in navbar
+                location.reload();
             } else if (result) {
                 alert(result.body.message || 'Error adding to cart');
             }

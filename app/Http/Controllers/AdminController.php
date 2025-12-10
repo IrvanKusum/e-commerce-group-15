@@ -35,4 +35,23 @@ class AdminController extends Controller
         $stores = Store::with('user')->get();
         return view('admin.stores', compact('stores'));
     }
+
+    public function verifyStore(Request $request)
+    {
+        $request->validate([
+            'store_id' => 'required|exists:stores,id',
+            'action' => 'required|in:approve,reject',
+        ]);
+
+        $store = Store::findOrFail($request->store_id);
+
+        if ($request->action === 'approve') {
+            $store->update(['is_verified' => true]);
+            return redirect()->route('admin.stores')->with('success', 'Store approved successfully!');
+        } else {
+            // Reject and delete the store
+            $store->delete();
+            return redirect()->route('admin.stores')->with('success', 'Store rejected and removed.');
+        }
+    }
 }

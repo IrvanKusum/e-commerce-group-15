@@ -15,14 +15,23 @@ class BuyerController extends Controller
         $query = Product::query();
 
         if ($request->has('search')) {
-            $query->where('name', 'like', '%' . $request->search . '%');
+            $searchTerm = $request->search;
+            
+            // Search by product name OR category name/slug
+            $query->where(function($q) use ($searchTerm) {
+                $q->where('name', 'like', '%' . $searchTerm . '%')
+                  ->orWhereHas('productCategory', function($categoryQuery) use ($searchTerm) {
+                      $categoryQuery->where('name', 'like', '%' . $searchTerm . '%')
+                                   ->orWhere('slug', 'like', '%' . $searchTerm . '%');
+                  });
+            });
         }
 
         if ($request->has('category')) {
             $query->where('product_category_id', $request->category);
         }
 
-        $products = $query->with('productImages')->get();
+        $products = $query->with('productImages')->latest()->get();
 
         // MOCK DATA GENERATOR IF EMPTY (For visual preview)
         if ($products->isEmpty() && !$request->has('search') && !$request->has('category')) {
@@ -39,7 +48,16 @@ class BuyerController extends Controller
         $query = Product::query();
 
         if ($request->has('search')) {
-            $query->where('name', 'like', '%' . $request->search . '%');
+            $searchTerm = $request->search;
+            
+            // Search by product name OR category name/slug
+            $query->where(function($q) use ($searchTerm) {
+                $q->where('name', 'like', '%' . $searchTerm . '%')
+                  ->orWhereHas('productCategory', function($categoryQuery) use ($searchTerm) {
+                      $categoryQuery->where('name', 'like', '%' . $searchTerm . '%')
+                                   ->orWhere('slug', 'like', '%' . $searchTerm . '%');
+                  });
+            });
         }
 
         if ($request->has('category')) {
@@ -256,5 +274,49 @@ class BuyerController extends Controller
         }
 
         return view('buyer.transaction-history', compact('transactions'));
+    }
+
+    public function showStoreRegistration()
+    {
+        // Check if user already has a store
+        $existingStore = \App\Models\Store::where('user_id', auth()->id())->first();
+        
+        if ($existingStore) {
+            // Show status page with verification info
+            return view('buyer.store-status', compact('existingStore'));
+        }
+
+        return view('buyer.store-registration');
+    }
+
+    public function submitStoreRegistration(Request $request)
+    {
+        // Check if user already has a store
+        $existingStore = \App\Models\Store::where('user_id', auth()->id())->first();
+        
+        if ($existingStore) {
+            return redirect()->route('seller.dashboard')->with('info', 'You already have a store.');
+        }
+
+        $request->validate([
+            'name' => 'required|string|max:255|unique:stores,name',
+            'description' => 'required|string',
+            'address' => 'required|string',
+            'city' => 'required|string',
+            'phone' => 'required|string',
+        ]);
+
+        \App\Models\Store::create([
+            'user_id' => auth()->id(),
+            'name' => $request->name,
+            'slug' => \Illuminate\Support\Str::slug($request->name),
+            'description' => $request->description,
+            'address' => $request->address,
+            'city' => $request->city,
+            'phone' => $request->phone,
+            'is_verified' => false, // Requires admin approval
+        ]);
+
+        return redirect()->route('store.register')->with('success', 'Toko berhasil didaftarkan! Menunggu verifikasi admin.');
     }
 }

@@ -75,7 +75,7 @@
 <body>
     <div class="sidebar">
         <a href="{{ route('home') }}" class="brand">
-            FLEX<span style="color:var(--primary)">SPORT</span> <span style="font-size:0.8rem; background:var(--primary); color:black; padding:2px 6px; border-radius:4px; margin-left:5px;">SELLER</span>
+            FLEX<span style="color:var(--primary)">SPORT</span>
         </a>
         
         <nav>
@@ -91,7 +91,7 @@
             <a href="{{ route('seller.balance') }}" class="nav-link {{ request()->routeIs('seller.balance') ? 'active' : '' }}">
                 <span><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect><line x1="1" y1="10" x2="23" y2="10"></line></svg></span> Balance
             </a>
-            <a href="{{ route('home') }}" class="nav-link" style="margin-top: 2rem; border: 1px solid rgba(255,255,255,0.1);">
+            <a href="{{ route('home') }}" class="nav-link" style="margin-top: 2rem; border: 1px solid var(--primary); background: rgba(255, 69, 0, 0.1);">
                 <span><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg></span> Back to Shop
             </a>
         </nav>

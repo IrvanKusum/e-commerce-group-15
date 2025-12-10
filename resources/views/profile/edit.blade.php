@@ -24,8 +24,11 @@
     }
 
     .profile-card header {
-        margin-bottom: 3rem !important; /* Increased from 2.5rem */
-        padding: 0 !important; /* Remove extra padding, use card padding instead */
+        margin-bottom: 3rem !important;
+        padding: 0 !important;
+        background: none !important;
+        border: none !important;
+        border-bottom: none !important;
     }
     
     .profile-card label {
@@ -102,31 +105,27 @@
             </div>
 
             <!-- Profile Dashboard Grid -->
-            <div style="display: grid; grid-template-columns: 2fr 1.5fr; gap: 3rem;">
+            <div style="display: grid; grid-template-columns: 2fr 1.5fr; gap: 4rem;">
                 
                 <!-- Left Column: Main Settings -->
                 <div style="display: flex; flex-direction: column; gap: 3rem;">
                     <!-- Update Profile Info -->
                     <div class="profile-card">
-                        <header style="margin-bottom: 1.5rem; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 1rem;">
-                            <h2 style="font-size: 1.25rem; font-weight: 700; color: white; display: flex; align-items: center; gap: 0.5rem;">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--primary);"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
-                                Profile Information
-                            </h2>
-                            <p style="color: var(--text-muted); font-size: 0.9rem;">Update your account's profile information and email address.</p>
-                        </header>
+                        <h2 style="font-size: 1.25rem; font-weight: 700; color: white; display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--primary);"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                            Profile Information
+                        </h2>
+                        <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 2rem;">Update your account's profile information and email address.</p>
                         @include('profile.partials.update-profile-information-form')
                     </div>
 
                     <!-- Update Password -->
                     <div class="profile-card">
-                        <header style="margin-bottom: 1.5rem; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 1rem;">
-                             <h2 style="font-size: 1.25rem; font-weight: 700; color: white; display: flex; align-items: center; gap: 0.5rem;">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--primary);"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
-                                Update Password
-                            </h2>
-                            <p style="color: var(--text-muted); font-size: 0.9rem;">Ensure your account is using a long, random password to stay secure.</p>
-                        </header>
+                        <h2 style="font-size: 1.25rem; font-weight: 700; color: white; display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--primary);"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                            Update Password
+                        </h2>
+                        <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 2rem;">Ensure your account is using a long, random password to stay secure.</p>
                         @include('profile.partials.update-password-form')
                     </div>
                 </div>
@@ -146,13 +145,11 @@
 
                     <!-- Delete Account -->
                     <div class="profile-card" style="border-color: rgba(239, 68, 68, 0.3);">
-                        <header style="margin-bottom: 1.5rem; border-bottom: 1px solid rgba(239, 68, 68, 0.2); padding-bottom: 1rem;">
-                             <h2 style="font-size: 1.25rem; font-weight: 700; color: #ef4444; display: flex; align-items: center; gap: 0.5rem;">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"></path><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
-                                Delete Account
-                            </h2>
-                            <p style="color: var(--text-muted); font-size: 0.9rem;">Once your account is deleted, all of its resources and data will be permanently deleted.</p>
-                        </header>
+                        <h2 style="font-size: 1.25rem; font-weight: 700; color: #ef4444; display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"></path><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
+                            Delete Account
+                        </h2>
+                        <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 2rem;">Once your account is deleted, all of its resources and data will be permanently deleted.</p>
                         @include('profile.partials.delete-user-form')
                     </div>
                 </div>

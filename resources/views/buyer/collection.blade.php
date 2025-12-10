@@ -84,8 +84,9 @@
                             {{ $product->condition === 'new' ? 'BARU' : 'BEKAS' }}
                         </span>
                         
-                        <div style="display:flex; width: 100%;">
-                            <a href="{{ route('product.detail', $product->id) }}" class="btn btn-primary" style="flex: 1; text-align: center;">LIHAT DETAIL</a>
+                        <div style="display:flex; gap: 0.5rem; width: 100%;">
+                            <button onclick="addToCart({{ $product->id }})" class="btn btn-secondary" style="flex: 1; padding:0.4rem 0.6rem; font-size: 0.75rem;">+ KERANJANG</button>
+                            <a href="{{ route('product.detail', $product->id) }}" class="btn btn-primary" style="flex: 1; text-align: center; padding:0.4rem 0.6rem; font-size: 0.75rem;">LIHAT DETAIL</a>
                         </div>
                     </div>
                 </div>
@@ -105,7 +106,39 @@
 @push('scripts')
     <script>
         function addToCart(id) {
-            alert('Item added to cart!');
+            const token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+            
+            fetch("{{ route('cart.add') }}", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Accept": "application/json",
+                    "X-CSRF-TOKEN": token
+                },
+                body: JSON.stringify({
+                    product_id: id,
+                    qty: 1
+                })
+            })
+            .then(response => {
+                if (response.status === 401) {
+                    window.location.href = "{{ route('login') }}";
+                    return;
+                }
+                return response.json().then(data => ({ status: response.status, body: data }));
+            })
+            .then(result => {
+                if (result && result.status === 200) {
+                    alert('✅ Produk ditambahkan ke keranjang!');
+                    location.reload();
+                } else if (result) {
+                    alert(result.body.message || 'Error adding to cart');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Something went wrong. Please try again.');
+            });
         }
     </script>
 @endpush
