@@ -69,6 +69,121 @@
             padding: 1.5rem;
             border-radius: 16px;
         }
+        /* Standardized Components */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.75rem 1.5rem;
+            border-radius: 12px;
+            font-weight: 600;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+            border: none;
+            gap: 0.5rem;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-family: 'Sora', sans-serif;
+        }
+        
+        .btn-sm {
+            padding: 0.5rem 1rem;
+            font-size: 0.8rem;
+            border-radius: 8px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #FF4500, #f97316);
+            color: white;
+            box-shadow: 0 4px 15px rgba(249, 115, 22, 0.3);
+            border: 1px solid transparent;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(249, 115, 22, 0.5);
+            filter: brightness(1.1);
+        }
+
+        .btn-danger {
+            background: rgba(239, 68, 68, 0.1);
+            color: #ef4444;
+            border: 1px solid rgba(239, 68, 68, 0.2);
+        }
+
+        .btn-danger:hover {
+            background: #ef4444;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(239, 68, 68, 0.4);
+        }
+        
+        .btn-edit {
+            background: rgba(255, 255, 255, 0.05);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .btn-edit:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: white;
+            transform: translateY(-2px);
+        }
+
+        .btn-outline-primary {
+            background: transparent;
+            color: var(--primary);
+            border: 1px solid var(--primary);
+        }
+
+        .btn-outline-primary:hover {
+            background: var(--primary);
+            color: white;
+            box-shadow: 0 4px 15px rgba(249, 115, 22, 0.4);
+            transform: translateY(-2px);
+        }
+
+        .btn-info {
+            background: rgba(59, 130, 246, 0.1);
+            color: #3b82f6;
+            border: 1px solid rgba(59, 130, 246, 0.2);
+        }
+
+        .btn-info:hover {
+            background: #3b82f6;
+            color: white;
+            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4);
+            transform: translateY(-2px);
+        }
+
+        /* Form Elements */
+        input:not([type="checkbox"]):not([type="radio"]), 
+        select, 
+        textarea {
+            background: var(--dark) !important;
+            border: 1px solid rgba(255,255,255,0.1) !important;
+            color: white !important;
+            padding: 0.75rem 1rem;
+            border-radius: 10px;
+            font-family: 'Sora', sans-serif;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            border-color: var(--primary) !important;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(255, 69, 0, 0.1);
+        }
+
+        /* Card Standardization */
+        .card {
+            background: var(--darkl);
+            border: 1px solid rgba(255,255,255,0.05);
+            border-radius: 16px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
     </style>
     @stack('styles')
 </head>
