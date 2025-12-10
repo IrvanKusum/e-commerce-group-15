@@ -72,7 +72,37 @@ class SellerController extends Controller
 
     public function withdrawal()
     {
-        return view('seller.withdrawal');
+        $store = auth()->user()->store;
+        
+        if (!$store) {
+            return redirect()->route('seller.setup');
+        }
+
+        // Calculate available balance: 95% of paid transactions minus approved withdrawals
+        $totalEarnings = $store->transactions()
+            ->where('payment_status', 'paid')
+            ->sum('grand_total') * 0.95; // 95% after 5% platform fee
+        
+        // Get store balance record or create if doesn't exist
+        $storeBalance = \App\Models\StoreBalance::firstOrCreate(
+            ['store_id' => $store->id],
+            ['balance' => 0]
+        );
+        
+        // Get total withdrawn (approved withdrawals)
+        $totalWithdrawn = $storeBalance->withdrawals()
+            ->where('status', 'approved')
+            ->sum('amount');
+        
+        $balance = $totalEarnings - $totalWithdrawn;
+        
+        // Get withdrawal history
+        $withdrawals = $storeBalance->withdrawals()
+            ->latest()
+            ->get()
+            ->toArray();
+        
+        return view('seller.withdrawal', compact('balance', 'withdrawals'));
     }
 
     public function balance()
@@ -99,6 +129,7 @@ class SellerController extends Controller
             'product_category_id' => 'required|exists:product_categories,id',
             'price' => 'required|numeric|min:0',
             'stock' => 'required|integer|min:0',
+            'weight' => 'required|integer|min:1',
             'condition' => 'required|in:new,used',
             'description' => 'nullable|string',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
@@ -110,7 +141,7 @@ class SellerController extends Controller
             'product_category_id' => $request->product_category_id,
             'price' => $request->price,
             'stock' => $request->stock,
-            'weight' => $request->weight ?? 500, // Default 500g if not provided
+            'weight' => $request->weight,
             'condition' => $request->condition,
             'description' => $request->description,
         ]);
@@ -138,11 +169,12 @@ class SellerController extends Controller
             'product_category_id' => 'required|exists:product_categories,id',
             'price' => 'required|numeric|min:0',
             'stock' => 'required|integer|min:0',
+            'weight' => 'required|integer|min:1',
             'condition' => 'required|in:new,used',
             'description' => 'nullable|string',
         ]);
 
-        $product->update($request->only(['name', 'product_category_id', 'price', 'stock', 'condition', 'description']));
+        $product->update($request->only(['name', 'product_category_id', 'price', 'stock', 'weight', 'condition', 'description']));
 
         return redirect()->route('seller.products')->with('success', 'Product updated successfully!');
     }
@@ -153,5 +185,54 @@ class SellerController extends Controller
         $product->delete();
 
         return redirect()->route('seller.products')->with('success', 'Product deleted successfully!');
+    }
+
+    public function processWithdrawal(\Illuminate\Http\Request $request)
+    {
+        $store = auth()->user()->store;
+        
+        if (!$store) {
+            return redirect()->route('seller.setup');
+        }
+
+        // Get or create store balance
+        $storeBalance = \App\Models\StoreBalance::firstOrCreate(
+            ['store_id' => $store->id],
+            ['balance' => 0]
+        );
+
+        // Calculate available balance
+        $totalEarnings = $store->transactions()
+            ->where('payment_status', 'paid')
+            ->sum('grand_total') * 0.95;
+        
+        $totalWithdrawn = $storeBalance->withdrawals()
+            ->where('status', 'approved')
+            ->sum('amount');
+        
+        $availableBalance = $totalEarnings - $totalWithdrawn;
+
+        // Validate withdrawal request
+        $request->validate([
+            'amount' => 'required|numeric|min:50000|max:' . $availableBalance,
+            'bank_name' => 'required|string',
+            'account_name' => 'required|string|max:255',
+            'account_number' => 'required|string|max:50',
+        ], [
+            'amount.max' => 'Jumlah penarikan melebihi saldo tersedia!',
+            'amount.min' => 'Minimal penarikan adalah Rp 50.000!',
+        ]);
+
+        // Create withdrawal request with auto-approved status
+        $storeBalance->withdrawals()->create([
+            'amount' => $request->amount,
+            'bank_name' => $request->bank_name,
+            'bank_account_name' => $request->account_name,
+            'bank_account_number' => $request->account_number,
+            'status' => 'approved', // Auto-approve for immediate withdrawal
+        ]);
+
+        return redirect()->route('seller.withdrawal')
+            ->with('success', 'Penarikan berhasil diproses! Saldo Anda telah dikurangi.');
     }
 }

@@ -71,7 +71,7 @@
                 </td>
                 <td style="padding: 1rem;">
                     @if($order->order_status == 'pending')
-                        <form action="{{ route('seller.orders.update', $order->id) }}" method="POST" style="display: inline;">
+                        <form action="{{ route('seller.orders.status', $order->id) }}" method="POST" style="display: inline;">
                             @csrf
                             @method('PATCH')
                             <input type="hidden" name="order_status" value="processing">
@@ -80,7 +80,7 @@
                             </button>
                         </form>
                     @elseif($order->order_status == 'processing')
-                        <form action="{{ route('seller.orders.update', $order->id) }}" method="POST" style="display: inline;">
+                        <form action="{{ route('seller.orders.status', $order->id) }}" method="POST" style="display: inline;">
                             @csrf
                             @method('PATCH')
                             <input type="hidden" name="order_status" value="shipped">
@@ -89,7 +89,7 @@
                             </button>
                         </form>
                     @elseif($order->order_status == 'shipped')
-                        <form action="{{ route('seller.orders.update', $order->id) }}" method="POST" style="display: inline;">
+                        <form action="{{ route('seller.orders.status', $order->id) }}" method="POST" style="display: inline;">
                             @csrf
                             @method('PATCH')
                             <input type="hidden" name="order_status" value="delivered">

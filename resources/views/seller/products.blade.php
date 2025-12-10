@@ -105,6 +105,8 @@
             <div style="display: flex; gap: 0.5rem; font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1rem;">
                 <span>Stock: {{ $product->stock }}</span>
                 <span>•</span>
+                <span>{{ $product->weight }}g</span>
+                <span>•</span>
                 <span>{{ ucfirst($product->condition) }}</span>
             </div>
             <div style="display: flex; gap: 0.5rem;">
@@ -147,21 +149,13 @@
             </div>
 
             <div class="form-row">
-                <div class="form-group">
+                <div class="form-group" style="grid-column: 1 / -1;">
                     <label for="product_category_id">Category *</label>
                     <select id="product_category_id" name="product_category_id" required>
                         <option value="">Select Category</option>
                         @foreach($categories as $category)
                         <option value="{{ $category->id }}">{{ $category->name }}</option>
                         @endforeach
-                    </select>
-                </div>
-
-                <div class="form-group">
-                    <label for="condition">Condition *</label>
-                    <select id="condition" name="condition" required>
-                        <option value="new">New</option>
-                        <option value="used">Used</option>
                     </select>
                 </div>
             </div>
@@ -175,6 +169,21 @@
                 <div class="form-group">
                     <label for="stock">Stock *</label>
                     <input type="number" id="stock" name="stock" min="0" required placeholder="10">
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="weight">Weight (grams) *</label>
+                    <input type="number" id="weight" name="weight" min="1" required placeholder="1000">
+                </div>
+
+                <div class="form-group">
+                    <label for="condition">Condition *</label>
+                    <select id="condition" name="condition" required>
+                        <option value="new">New</option>
+                        <option value="used">Used</option>
+                    </select>
                 </div>
             </div>
 

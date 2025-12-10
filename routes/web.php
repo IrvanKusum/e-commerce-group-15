@@ -64,6 +64,7 @@ Route::middleware(['auth', 'verified'])->prefix('seller')->name('seller.')->grou
     Route::post('/orders/{id}/status', [SellerController::class, 'updateOrderStatus'])->name('orders.status');
     Route::get('/setup', [SellerController::class, 'setup'])->name('setup');
     Route::get('/withdrawal', [SellerController::class, 'withdrawal'])->name('withdrawal');
+    Route::post('/withdrawal', [SellerController::class, 'processWithdrawal'])->name('withdrawal.process');
     Route::get('/balance', [SellerController::class, 'balance'])->name('balance');
     Route::get('/categories', [SellerController::class, 'categories'])->name('categories');
     Route::get('/product-image', [SellerController::class, 'productImage'])->name('product.image');

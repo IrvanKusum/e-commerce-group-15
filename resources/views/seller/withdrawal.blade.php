@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.seller')
 
 @section('title', 'Penarikan Saldo - FlexSport')
 
@@ -190,7 +190,7 @@
         </div>
         @endif
 
-        <form method="POST" action="#">
+        <form method="POST" action="{{ route('seller.withdrawal.process') }}">
             @csrf
             
             <div class="form-group">
